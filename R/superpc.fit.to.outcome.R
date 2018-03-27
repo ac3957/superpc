@@ -56,33 +56,23 @@ makelist=function (y, censoring.status, predictors)
     }
 
     if (is.matrix(predictors)) {
-        if (ncol(predictors) > 3) {
-            stop("Can't have > 3 principal components")
-        }
-predictor.type=dimnames(predictors)[[2]]
 
-if(is.null(dimnames(predictors)[[2]])){
-  predictor.type=rep("continuous",ncol(predictors))
- }
-        score1 = predictors[, 1]
-        if(predictor.type[1]=="factor") {
-            score1 = as.factor(score1)
-        }
-        val$score.1 = score1
-        if (ncol(predictors) > 1) {
-            score2 = predictors[, 2]
- if(predictor.type[2]=="factor") {
-                score2 = as.factor(score2)
-            }
-            val$score.2 = score2
-        }
-        if (ncol(predictors) > 2) {
-            score3 = predictors[, 3]
- if(predictor.type[3]=="factor") {
-                score3 = as.factor(score3)
-            }
-            val$score.3 = score3
-        }
+		predictor.type=dimnames(predictors)[[2]]
+
+		if(is.null(dimnames(predictors)[[2]])){
+		  predictor.type=rep("continuous",ncol(predictors))
+		 }
+
+		ncomps = ncol(predictors)
+
+		for(i in 1:ncomps){        
+			score = predictors[, i]
+			if(predictor.type[i]=="factor") {
+				score = as.factor(score)
+			}
+			val[[paste("score", i, sep = ".")]] = score
+		}
+
     }
     return(val)
 }

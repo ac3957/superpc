@@ -4,9 +4,7 @@ superpc.predict <- function (object, data, newdata, threshold, n.components = 3,
 {
     this.call <- match.call()
     prediction.type <- match.arg(prediction.type)
-    if (n.class > 3) {
-        stop("Maximum number of survival classes is 3")
-    }
+
     which.features <- (abs(object$feature.scores) >= threshold)
     x.sml <- data$x[which.features, ]
     n.pc <- n.components
